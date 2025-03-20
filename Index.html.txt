@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday !</title>
+<style>
+body {
+    text-align: center;
+    background-color: #ffeb3b;
+    font-style: italic, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+h1 {
+    color: black;
+    font-size: 50px;
+    margin-top: 50px;
+    animation: bounce 1s infinite;
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+p {
+    font-size: 20px;
+    color: #555;
+}
+.btn {
+    background-color: white;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.hidden-message {
+    display: none;
+    font-size: 22px;
+    color: #388e3c;
+    margin-top: 20px;
+}
+</style>
+</head>
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="confetti"></canvas>
+    <canvas id="fireworks"></canvas>
+
+    <h1>🎉 Happy Birthday! 🎂</h1>
+    <p>Dear [pragu],</p>
+    <p>Wishing you a day filled with love, joy, and laughter!</p>
+
+    <button class="btn" onclick="revealMessage()">🎁</button>
+
+    <p class="hidden-message" id="secretMessage">🎉 Congrats Pragu on turning 18th! ✨🤌🏻I'm so grateful of kanhaji and mumma papa for your my bestest friend ever who supports me and super intelligent and your prettiness words can’t define praying to god to all dreams come true 🧿and always be happy and healthy have the best day prag enjoy your day and always be happy 🥰☺️💖,</p>
+
+    <audio id="birthdaySong" src="https://files.catbox.moe/gd2yrh.mp3"></audio>
+
+    <script>
+        function revealMessage() {
+            document.getElementById("secretMessage").style.display = "block";
+            document.getElementById("birthdaySong").play();
+        }
+
+        // Confetti Effect
+        const confetti = document.getElementById("confetti");
+        const ctx = confetti.getContext("2d");
+        const confettiPieces = [];
+        const numPieces = 100;
+
+        function ConfettiPiece() {
+            this.x = Math.random() * window.innerWidth;
+            this.y = Math.random() * window.innerHeight;
+            this.size = Math.random() * 5 + 5;
+            this.speed = Math.random() * 3 + 2;
+            this.color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        }
+    ConfettiPiece.prototype.update = function () {
+    this.y += this.speed;
+    if (this.y > window.innerHeight) {
+        this.y = 0 - this.size;
+        this.x = Math.random() * window.innerWidth;
+    }
+};
+
+function createConfetti() {
+    for (let i = 0; i < numPieces; i++) {
+        confettiPieces.push(new ConfettiPiece());
+    }
+}
+
+function drawConfetti() {
+    ctx.clearRect(0, 0, confetti.width, confetti.height);
+    confettiPieces.forEach(piece => {
+        ctx.beginPath();
+        ctx.arc(piece.x, piece.y, piece.size, 0, Math.PI * 2);
+        ctx.fillStyle = piece.color;
+        ctx.fill();
+        piece.update();
+    });
+    requestAnimationFrame(drawConfetti);
+}
+
+confetti.width = window.innerWidth;
+confetti.height = window.innerHeight;
+createConfetti();
+drawConfetti();
+
+// Firework
+class Firework {
+    constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.particles = [];
+        for (let i = 0; i < 50; i++) {
+            this.particles.push(new Particle(this.x, this.y, this.color));
+        }
+    }
+
+    update() {
+      
